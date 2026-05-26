@@ -1,43 +1,32 @@
 # init/playbooks/roles/ansible/tasks/install.yml
-- name: Get Termux system prefix
+- name: Get Termux prefix
   shell: echo $PREFIX
   register: termux_env_prefix
   changed_when: false
 
-- name: Set mirror and install system dependencies
+- name: Встановити надійне дзеркало
   raw: |
     echo "deb https://packages-cf.termux.dev/apt/termux-main stable main" \
       > $PREFIX/etc/apt/sources.list
-    apt-get update -y 2>/dev/null || true
-    pkg install -y binutils python rust libffi openssl clang make git build-essential python-pip cmake libsodium
+    pkg update -y 2>/dev/null || true
   failed_when: false
 
-- name: Install system dependencies and build tools
+- name: Встановити системні залежності та pre-compiled python пакети
   raw: >
     pkg install -y
-    binutils python rust libffi openssl clang make
-    git build-essential python-pip cmake libsodium
-  register: pkg_install
-  failed_when: >
-    pkg_install.rc != 0 and
-    'Unable to locate package' not in pkg_install.stdout
+    python python-pip python-cryptography
+    git make cmake libsodium openssl libffi
+    clang build-essential
+  failed_when: false
 
 - name: Get ANDROID_API level
   shell: getprop ro.build.version.sdk
   register: android_sdk
   changed_when: false
 
-- name: Upgrade pip, setuptools, and wheel
-  shell: pip install --upgrade pip setuptools wheel
-
-- name: Install cryptography via pip
-  shell: pip install cryptography
+- name: Встановити Ansible
+  shell: pip install ansible
   environment:
     LDFLAGS: "-L{{ termux_env_prefix.stdout }}/lib"
     CPPFLAGS: "-I{{ termux_env_prefix.stdout }}/include"
     ANDROID_API_LEVEL: "{{ android_sdk.stdout }}"
-    CARGO_BUILD_TARGET: "aarch64-linux-android"
-    RUSTFLAGS: "-C lto=n"
-
-- name: Install Ansible and additional modules
-  shell: pip install ansible pynacl pywinrm[credssp]
