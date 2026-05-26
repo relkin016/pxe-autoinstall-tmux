@@ -33,7 +33,7 @@ jenkins_args: "--httpPort={{ jenkins_port }} --httpListenAddress={{ jenkins_http
 
 jenkins_admin_email: "admin@localhost"
 jenkins_admin_user: "admin"
-jenkins_admin_password: "admin"
+jenkins_admin_password: "{{ jenkins_admin_password | default('admin', true)}}"
 
 jenkins_service_enabled: true
 jenkins_service_name: "jenkins"
