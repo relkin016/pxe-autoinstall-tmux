@@ -12,7 +12,7 @@
 - name: Copy ansible .vault_pass file
   ansible.builtin.copy:
     src: "{{ lookup('env', 'HOME') }}/ansible/.vault_pass"
-    dest: "{{ ansible_dir }}/ansible/.vault_pass"
+    dest: "{{ ansible_dir }}/.vault_pass"
 
 - name: Copy ansible vault file
   ansible.builtin.copy:
