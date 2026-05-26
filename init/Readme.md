@@ -28,17 +28,16 @@ bash install.sh
 
 # 1. Оновити пакети
 # У разі створення діалогових вікон натискаємо "Y"
-apt update && apt full-upgrade
-pkg update && pkg upgrade
+pkg update && pkg upgrade -y
 
 # 2. Інсталювати залежності для роботи з Ansible
 pkg install openssh python
 
-# 3. Запуск sshd
-sshd
-
-# 4. Налаштувати пароль користувача (для роботи по SSH)
+# 3. Налаштувати пароль користувача (для роботи по SSH)
 passwd
+
+# 4. Запуск sshd
+sshd
 
 # 5. Дізнатися ім'я користувача
 whoami          # Це ваше ім'я
