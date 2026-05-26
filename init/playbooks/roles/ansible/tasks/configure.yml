@@ -9,6 +9,11 @@
     - "{{ ansible_dir }}/group_vars/all"
     - "{{ ansible_dir }}/group_vars/termux"
 
+- name: Copy ansible .vault_pass file
+  ansible.builtin.copy:
+    src: "{{ lookup('env', 'HOME') }}/ansible/.vault_pass"
+    dest: "{{ ansible_dir }}/ansible/.vault_pass"
+
 - name: Copy ansible vault file
   ansible.builtin.copy:
     src: "{{ lookup('env', 'HOME') }}/ansible/group_vars/all/vault.yaml"
@@ -19,7 +24,6 @@
     cmd: ansible-vault encrypt "{{ termux_home }}/ansible/group_vars/all/vault.yaml"
   environment:
     ANSIBLE_VAULT_PASSWORD_FILE: "{{ termux_home }}/ansible/.vault_pass"
-
 
 - name: Genetate ansible.cfg
   ansible.builtin.ini_file:
