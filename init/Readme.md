@@ -28,7 +28,7 @@ bash install.sh
 
 # 1. Оновити пакети
 # У разі створення діалогових вікон натискаємо "Y"
-pkg update && pkg upgrade -y
+pkg update && yes | pkg upgrade -y
 
 # 2. Інсталювати залежності для роботи з Ansible
 pkg install openssh python
