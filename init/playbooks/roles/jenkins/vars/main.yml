@@ -45,7 +45,7 @@ jenkins_wait_delay: 10
 
 jcasc_config_source: jenkins.yaml
 jcasc_config_dest: "{{ jenkins_home }}/jenkins.yaml"
-jcasc_reload_token: "{{ lookup('env', 'JCASC_RELOAD_TOKEN') | default('changeme-' + ansible_date_time.epoch, true) }}"
+jcasc_reload_token: "{{ lookup('env', 'JCASC_RELOAD_TOKEN') | default('changeme-' + now(fmt='%s'), true) }}"
 
 install_plugins: true
 install_plugins_from_file: true
