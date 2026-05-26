@@ -363,7 +363,7 @@ termux_home: /data/data/com.termux/files/home
 termux_usr: /data/data/com.termux/files/usr
 termux_bin: /data/data/com.termux/files/usr/bin
 
-jenkins_version: 2.555.1
+jenkins_version: 2.555.2
 jenkins_port: 8080
 jenkins_home: "{{ termux_home }}/.jenkins"
 jenkins_war: "{{ jenkins_home }}/jenkins.war"
